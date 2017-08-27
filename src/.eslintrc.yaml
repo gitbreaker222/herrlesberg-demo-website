@@ -1,0 +1,21 @@
+---
+  env:
+    node: false
+    browser: true
+  plugins:
+    - html
+  globals:
+    riot: true
+    PrismicDom: true
+    XMLHttpRequest: true
+    app: true
+  rules:
+    eqeqeq: [error, smart]
+    indent: [error, 2]
+    no-bitwise: [error, { allow: ["|"] }]
+    linebreak-style: [error, unix]
+    no-cond-assign: off
+    no-console: [warn, { allow: [warn, error] }]
+    no-unexpected-multiline: error
+    quotes: [error, single, avoid-escape]
+    semi: [error, never]

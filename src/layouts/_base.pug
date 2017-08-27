@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+  head
+    title #{title}
+    meta(name="description" content=description)
+    meta(charset="UTF-8")
+    link(rel="stylesheet" href="/assets/main.css")
+  
+  body
+    
+    header
+      mixin list(x)
+        each item in x
+          if (item.type == 'file')
+            - item.path = item.path.replace('.md', '.html')
+            - item.name = item.name.replace('.md', '')
+            - item.name = item.name.replace('index', 'home')
+            div: a(href=item.path) #{item.name}
+          else if (item.type == 'folder')
+            div.subfolder
+              h3 #{item.name}
+              +list(item.children)
+          
+      nav(role="navigation" aria-labelledby="firstLabel")
+        h2(span id="firstLabel" class="hidden") Menu
+        +list(contentMenu)
+        div: a(href="https://dashboard.datocms.com/") CMS
+        
+        
+    block page
+      
+    app-footer(generator=generator url=url)
+    
+    script(type="text/javascript")
+      include ../../node_modules/riot/riot+compiler.min.js
+      // TODO load prismic
+    
+    script(type="riot/tag" data-src="assets/main.tag.js")
+      
+      
+    script.
+      riot.mount('*')
+      
