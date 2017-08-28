@@ -14,24 +14,23 @@
 
 
 module.exports = (dato, root, i18n) => {
-
-  /*
-  === FRONTPAGE / INDEX ===
-  */
-  root.createPost(`src/content/index.md`, 'yaml', {
-    frontmatter: {
-      layout: 'layout',
-      title: dato.index.title,
-      subtitle: dato.index.subtitle,
-    },
-    content: dato.index.content
-  })
-
-  /*
-  === PAGES ===
-  */
   root.directory("src/content", (folder) => {
-    console.log(dato.pages)
+
+    /*
+      === FRONTPAGE / INDEX ===
+    */
+    folder.createPost(`index.md`, 'yaml', {
+      frontmatter: {
+        layout: 'layout',
+        title: dato.index.title,
+        subtitle: dato.index.subtitle,
+      },
+      content: dato.index.content
+    })
+
+    /*
+       === PAGES ===
+    */
     dato.pages.forEach((item) => {
       folder.createPost(
         `${item.slug}.md`, "yaml", {
@@ -45,25 +44,25 @@ module.exports = (dato, root, i18n) => {
         }
       )
     })
-  })
 
-  /*
-  === ARTICLES ===
-  */
-  root.directory("src/content/articles/", (folder) => {
-    dato.articles.forEach((post) => {
-      folder.createPost(
-        `${post.slug}.md`, "yaml", {
-          frontmatter: {
-            layout: 'post',
-            title: post.title,
-            date: post.date,
-            image: post.image,
-          },
-          content: post.content
-        }
-      )
+    /*
+       === ARTICLES ===
+    */
+    folder.directory("articles", (subfolder) => {
+      dato.articles.forEach((post) => {
+        subfolder.createPost(
+          `${post.slug}.md`, "yaml", {
+            frontmatter: {
+              layout: 'post',
+              title: post.title,
+              date: post.date,
+              image: post.image,
+            },
+            content: post.content
+          }
+        )
+      })
     })
+    
   })
-
 }
