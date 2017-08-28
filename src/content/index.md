@@ -1,17 +1,12 @@
 ---
 layout: layout
-title: metalify-riot-starter
-subtitle: 'Creating static websites built with metalsmith, hosted on netlify, CMS with datocms.com and with riot.js for custom tags'
+title: Unser Herrlesbergladen
+subtitle: Mehr als nur Einkaufen
+position: 0.1
 ---
 
-![test image](./media/logo.svg)
-
-- Edit content with CMS
-
-- Auto updating navigation menu
-
-- Write style with SASS
-
-- Build custom tags with RiotJS
-
-<app-widget></app-widget>
+* öffnungszeiten
+* angebote (link)
+* standort
+* intro
+* kontakt (anliegen)

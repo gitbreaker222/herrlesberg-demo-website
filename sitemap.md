@@ -1,0 +1,33 @@
+- menü:
+  - index:
+    - öffnungszeiten
+    - angebote (link)
+    - standort
+    - intro
+    - kontakt (anliegen)
+  - angebote:
+    - seiten (aktuell + wocheninfos)
+    - pdf-download
+    - antrag pdf- download
+  - laden:
+    - einblicke
+    - sortiment
+    - bestellservice
+    - team
+    - lieferanten
+  - geno:
+    - überblick
+    - nachrichten (link)
+    - geschichte (link)
+    - stellenangebote (link)
+    - Mitglied werden
+  - nachrichten (blog)
+  - geschichte (blog)
+  - Stellen:
+    - hilfe komplett
+    - stellenangebote
+  - impressum:
+    - Kontakte
+    - Steuer, Bank, Handelsregister
+    - Webseite
+    - datenschutz

@@ -58,16 +58,19 @@ contentMenu: [
         type: 'file',
         name: 'first-post.html',
         path: '/posts/first-post.html'
-      },
-      {
-        type: 'file',
-        name: 'fourth-post.html',
-        path: '/posts/fourth-post.html'
+        date: '2017-01-01'
       },
       {
         type: 'file',
         name: 'second-post.html',
         path: '/posts/second-post.html'
+        date: '2017-02-01'
+      },
+      {
+        type: 'file',
+        name: 'fourth-post.html',
+        path: '/posts/fourth-post.html'
+        date: '2017-03-01'
       },
     ]
   }
