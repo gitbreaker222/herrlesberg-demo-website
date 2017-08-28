@@ -45,6 +45,7 @@ site.ignore([
   .use(contentMenu({
     folder: 'content',
     //fileType: '.html',
+    indexKey: 'position',
     orderBy: 'date',
     ascOrDesc: 'desc'
   }))

@@ -24,6 +24,7 @@ module.exports = (dato, root, i18n) => {
         layout: 'layout',
         title: dato.index.title,
         subtitle: dato.index.subtitle,
+        position: 0.1
       },
       content: dato.index.content
     })
@@ -63,6 +64,6 @@ module.exports = (dato, root, i18n) => {
         )
       })
     })
-    
+
   })
 }
