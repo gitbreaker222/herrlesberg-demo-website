@@ -39,40 +39,31 @@ options:
 }
 ```
 
-output:
+output (is actually json):
 
-```javascript
+```yaml
 
-contentMenu: [
-  {
-    type: 'file',
-    name: 'index.html',
-    path: '/index.html',
-    date: undefined
-  },
-  {
-    name: 'posts',
-    type: 'folder',
-    children: [
-      {
-        type: 'file',
-        name: 'first-post.html',
-        path: '/posts/first-post.html'
-        date: '2017-01-01'
-      },
-      {
-        type: 'file',
-        name: 'second-post.html',
-        path: '/posts/second-post.html'
-        date: '2017-02-01'
-      },
-      {
-        type: 'file',
-        name: 'fourth-post.html',
-        path: '/posts/fourth-post.html'
-        date: '2017-03-01'
-      },
-    ]
-  }
-]
+contentMenu:
+  type: menu
+  baseUrl: /
+  children:
+    - title: Home
+      position: 1
+      description: asdf
+      slug: index
+      path: /index
+    - title: News
+      position: 2
+      description: asdf asdf
+      slug: news
+      path: /news
+  nachrichten:
+    type: menu
+    baseUrl: /news/
+    children:
+      - title: My first post
+        date: '2020-10-10'
+        description: asdf
+        slug: my-first-post
+        path: /news/my-first-post
 ```

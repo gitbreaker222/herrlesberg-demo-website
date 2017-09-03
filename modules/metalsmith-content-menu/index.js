@@ -16,7 +16,11 @@ var metalsmith_plugin = function (opts) {
     var metadata = metalsmith.metadata()
     var collection = []
     var currentFolder = null
-    var contentMenu = []
+    var contentMenu = {
+      type: 'menu',
+      baseUrl: '/',
+      children: []
+    }
 
     var getfolderPath = function (path) {
       //matches e.g. "posts/2020" in "/posts/2020/peace.html"
@@ -32,19 +36,20 @@ var metalsmith_plugin = function (opts) {
       var folderPath  = getfolderPath(path)
       var fileData    = files[filePath]
 
+      //filter filestream
       if (fileData[hideKey]) return
       if (!filePath.startsWith(folder)) return
       if (!filePath.endsWith(fileType)) return
 
-      var newObj      = {}
-      newObj.type     = 'file'
-      newObj.name     = fileData.title || path
-      newObj.path     = path
-      newObj.folderPath = folderPath
-      newObj[indexKey] = fileData[indexKey] || null
-      newObj[orderKey] = fileData[orderKey]
+      var  item = _.clone(fileData)
+      //child.title    = fileData.title || path
+      //child.description = fileData.description
+      item.path = path
+      item.folderPath = folderPath
+      delete item.mode
+      delete item.stats
 
-      collection.push(newObj)
+      collection.push(item)
     })
 
     //sort files
@@ -57,25 +62,25 @@ var metalsmith_plugin = function (opts) {
     function itemGrouping (item) {
       currentFolder = contentMenu
       if (item.folderPath.length) currentFolderDeeper(item)
-      currentFolder.push(item)
+      currentFolder.children.push(item)
     }
     function currentFolderDeeper (item) {
       _.forEach(item.folderPath.split('/'), function (part) {
         function folderExists (name) {
-          return _.includes(_.map(currentFolder, 'name'), name)
+          return !!currentFolder[name]
         }
         function createThatFolderHere (name, folder) {
-          folder.push({
-            name: name,
-            type: 'folder',
+          folder[name] = {
+            type: 'menu',
+            baseUrl: currentFolder.baseUrl + name + '/',
             children: []
-          })
+          }
         }
 
         if (!folderExists(part)) {
           createThatFolderHere(part, currentFolder)
         }
-        currentFolder = _.last(currentFolder).children
+        currentFolder = currentFolder[part]
       })
     }
 

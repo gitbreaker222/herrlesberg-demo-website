@@ -72,7 +72,8 @@ if (dev) {
 //       console.log('##', file)
 //       //var data = files[file]
 //     })
-//     console.log(metalsmith.metadata().navs)
+//
+//     console.log(metalsmith.metadata())
 //     done()
 //   }
 // }

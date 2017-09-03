@@ -17,52 +17,62 @@ module.exports = (dato, root, i18n) => {
   root.directory("src/content", (folder) => {
 
     /*
-      === FRONTPAGE / INDEX ===
-    */
-    folder.createPost(`index.md`, 'yaml', {
-      frontmatter: {
-        layout: 'layout',
-        title: dato.index.title,
-        subtitle: dato.index.subtitle,
-        position: 0.1
-      },
-      content: dato.index.content
-    })
-
-    /*
        === PAGES ===
     */
-    dato.pages.forEach((item) => {
-      folder.createPost(
-        `${item.slug}.md`, "yaml", {
-          frontmatter: {
-            layout: 'layout',
-            title: item.title,
-            position: item.position,
-            image: item.image,
-          },
-          content: item.content
-        }
-      )
-    })
+    dato.pages.forEach((page) => {
 
-    /*
-       === ARTICLES ===
-    */
-    folder.directory("articles", (subfolder) => {
-      dato.articles.forEach((post) => {
-        subfolder.createPost(
-          `${post.slug}.md`, "yaml", {
+      if (page.collection) {
+        var collection = dato[page.collection]
+        //collection index page…
+        folder.createPost(
+          `${page.slug}.md`, "yaml", {
             frontmatter: {
-              layout: 'post',
-              title: post.title,
-              date: post.date,
-              image: post.image,
+              layout: 'list',
+              title: page.title,
+              slug: page.slug,
+              position: page.position,
+              image: page.image,
+              collection: page.slug
             },
-            content: post.content
+            content: page.content || ''
           }
         )
-      })
+
+        //… and folder for the collection
+        folder.directory(page.slug, (subfolder) => {
+          collection.forEach((item) => {
+            subfolder.createPost(
+              `${item.slug}.md`, "yaml", {
+                frontmatter: {
+                  layout: 'post',
+                  title: item.title,
+                  slug: item.slug,
+                  date: item.date,
+                  image: item.image,
+                },
+                content: item.content
+              }
+            )
+          })
+        })
+
+      } else {
+
+        //normal page
+        folder.createPost(
+          `${page.slug}.md`, "yaml", {
+            frontmatter: {
+              layout: 'layout',
+              title: page.title,
+              slug: page.slug,
+              position: page.position,
+              image: page.image,
+            },
+            content: page.content
+          }
+        )
+
+      }
     })
 
   })

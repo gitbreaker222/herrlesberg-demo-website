@@ -1,0 +1,12 @@
+extends _base.pug
+
+block page
+  
+  if (!!contents)
+    != contents
+  
+  each item in contentMenu[slug].children
+    div
+      a(href=item.path): h3 #{item.title}
+      p #{item.description}
+    
