@@ -1,12 +1,13 @@
 ---
 layout: layout
 title: Laden
-position: 2
+slug: laden
+position: 3
 image: null
 ---
 
-einblicke
-sortiment
-bestellservice
-team
-lieferanten
+* einblicke
+* sortiment
+* bestellservice
+* team
+* lieferanten

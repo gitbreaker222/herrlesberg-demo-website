@@ -1,11 +1,12 @@
 ---
 layout: layout
 title: Impressum
-position: 5
+slug: impressum
+position: 8
 image: null
 ---
 
-Kontakte
-Steuer, Bank, Handelsregister
-Webseite
-datenschutz
+* Kontakte
+* Steuer, Bank, Handelsregister
+* Webseite
+* datenschutz

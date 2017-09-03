@@ -1,10 +1,11 @@
 ---
 layout: layout
 title: Angebote
-position: 1
+slug: angebote
+position: 2
 image: null
 ---
 
-seiten (aktuell + wocheninfos)
-pdf-download
-antrag pdf- download
+* seiten (aktuell + wocheninfos)
+* pdf-download
+* antrag pdf- download

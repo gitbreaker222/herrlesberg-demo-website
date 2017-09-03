@@ -1,9 +1,10 @@
 ---
 layout: layout
 title: Stellen
-position: 4
+slug: stellen
+position: 7
 image: null
 ---
 
-hilfe komplett
-stellenangebote
+* hilfe komplett
+* stellenangebote

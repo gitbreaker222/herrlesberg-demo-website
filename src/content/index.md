@@ -1,8 +1,9 @@
 ---
 layout: layout
-title: Unser Herrlesbergladen
-subtitle: Mehr als nur Einkaufen
-position: 0.1
+title: Home
+slug: index
+position: 1
+image: null
 ---
 
 * öffnungszeiten
