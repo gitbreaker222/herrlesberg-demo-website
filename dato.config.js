@@ -40,6 +40,9 @@ module.exports = (dato, root, i18n) => {
 
         //… and folder for the collection
         folder.directory(page.slug, (subfolder) => {
+          /*
+          === COLLECTIONS ===
+          */
           collection.forEach((item) => {
             subfolder.createPost(
               `${item.slug}.md`, "yaml", {
