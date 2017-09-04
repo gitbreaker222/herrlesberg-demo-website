@@ -1,5 +1,6 @@
 const info          = require('./package.json')
 const Metalsmith    = require('./lib')
+const elemeno       = require('./modules/metalsmith-elemeno')
 const sass          = require('metalsmith-sass')
 const concat        = require('metalsmith-concat')
 const contentMenu   = require('./modules/metalsmith-content-menu')
@@ -7,7 +8,12 @@ const markdown      = require('metalsmith-markdown')
 const layouts       = require('./modules/metalsmith-layouts-222/index')
 const moveUp        = require('metalsmith-move-up')
 var dev = process.argv[2] || false
-if (dev) dev        = require("metalsmith-dev")
+var doClean = !!dev
+if (dev) {
+  dev        = require("metalsmith-dev")
+  var dotenv = require('dotenv')
+  dotenv.load()
+}
 
 var site = Metalsmith(__dirname)
   .metadata({
@@ -24,7 +30,8 @@ site.ignore([
     '.*',  //ignore hidden files like .eslintrc
     'layouts',
   ])
-  .clean(false)
+  .clean(doClean)
+  .use(elemeno(process.env.ELEMENO_API_TOKEN))
   .use(sass({
     sourceMap: true,
     sourceMapContents: true,
