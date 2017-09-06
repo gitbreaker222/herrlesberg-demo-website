@@ -1,17 +1,23 @@
-body > header
+.wrapper > header
   display: flex
-  flex-flow: row nowrap
+  flex-flow: row wrap
   justify-content: center
   align-items: center
-  height: 12rem
-  padding: 5px
+  text-align: center
+  padding: 1em
   background: $colorPrimary
 
+  @media (min-width: $md)
+    padding-right: 1em
+
   *, h1
-    font-size: 3rem
     margin: 0
     padding: 0 0.5rem
 
   img
     height: 100%
     max-height: 5rem
+
+  button.toggle
+    @media (min-width: $md)
+      display: none

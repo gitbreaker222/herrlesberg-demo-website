@@ -30,7 +30,7 @@ site.ignore([
     '.*',  //ignore hidden files like .eslintrc
     'layouts',
   ])
-  .clean(doClean)
+  .clean(true)
   .use(elemeno(process.env.ELEMENO_API_TOKEN))
   .use(sass({
     sourceMap: true,

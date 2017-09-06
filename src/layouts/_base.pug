@@ -4,28 +4,32 @@ html(lang='en')
     title #{title}
     meta(name="description" content=description)
     meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
     link(rel="stylesheet" href="/assets/main.css")
   
-  body
-    
-    header
-      img.logo(src="/media/logo.svg")
-      h1 #Unser Herrlesbergladen
+  body.root.row--fluid
+    aside.menu.grid-9.grid-3-tablet
+      button.toggle.btn(onclick="app.toggleMenu()") Menü 🠶
       
-    aside
+      h2(id="menuTitle") Menü
       
-      nav(role="navigation" aria-labelledby="firstLabel")
-        h2(span id="firstLabel" class="hidden") Menu
+      nav(role="navigation" aria-labelledby="menuTitle")
         each item in contentMenu.children
           - item.path = item.path.replace('.md', '.html')
           - item.title = item.title.replace('.md', '')
           - item.title = item.title.replace('index', 'Home')
           div: a(href=item.path) #{item.title}
+          
+      app-footer(generator=generator url=url)
         
         
-    main: block page
-      
-    app-footer(generator=generator url=url)
+    main.wrapper.grid
+      header
+        img.logo(src="/media/logo.svg")
+        h1 #{title}
+          
+      main: block page
+        
     
     script(type="text/javascript")
       include ../../node_modules/riot/riot+compiler.min.js
