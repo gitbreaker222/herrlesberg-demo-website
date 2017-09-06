@@ -1,6 +1,6 @@
 
 var Elemeno = require('elemeno')
-
+const _ = require('lodash')
 
 var metalsmith_elemeno = function (apiToken) {
   // Initialise plugin with options.
@@ -17,6 +17,21 @@ var metalsmith_elemeno = function (apiToken) {
     var description = ''
     var content = ''
     var asyncCounter = 0
+
+    /*
+       # METADATA
+    */
+    asyncCounter++
+    elemeno.getSingle('meta')
+    .then(function(response) {
+      asyncCounter--
+      var meta = response.data.content
+      meta = _.merge(metalsmith.metadata(), meta)
+      metalsmith.metadata(meta)
+      if (!asyncCounter) done()
+    }, function(error) {
+      done(new Error(error))
+    })
 
     asyncCounter++
     elemeno.getCollectionItems('pages')

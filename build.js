@@ -8,7 +8,6 @@ const markdown      = require('metalsmith-markdown')
 const layouts       = require('./modules/metalsmith-layouts-222/index')
 const moveUp        = require('metalsmith-move-up')
 var dev = process.argv[2] || false
-var doClean = !!dev
 if (dev) {
   dev        = require("metalsmith-dev")
   var dotenv = require('dotenv')
@@ -17,7 +16,7 @@ if (dev) {
 
 var site = Metalsmith(__dirname)
   .metadata({
-    title: info.name,
+    mainTitle: info.name,
     generator: "Metalsmith",
     url: info.homepage
   })

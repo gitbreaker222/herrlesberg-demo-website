@@ -26,8 +26,9 @@ html(lang='en')
         
     main.wrapper.grid
       header
-        img.logo(src="/media/logo.svg")
-        h1 #{title}
+        if (logo)
+          img.logo(src=logo.imageUrl)
+        h1 #{mainTitle}
           
       main: block page
         
