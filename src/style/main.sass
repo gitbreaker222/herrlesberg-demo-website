@@ -1,9 +1,38 @@
-@import "normalize"
-@import "milligram.min"
-@import "nav"
+$colorPrimary:    #ffeb3b
+$colorSecondary:  #558b2f
+$colorContrast:   #212121
 
-body
-  padding: 1rem
+//mobile first:
+//everything without media query works for mobile
+$md: 40rem
+$lg: 80rem
+$xl: 120rem
+
+// LIBRARIES
+//@import "reset"
+// @import "milligram.min"
+@import "amazium"
+
+//CUSTOM milligram
+// @media (min-width: $md)
+//   .row
+//     margin: 0
+//
+//     .column
+//       padding: 0
+//
+// .button, button, input[type='button'], input[type='reset'], input[type='submit']
+//   background-color: $colorSecondary
+//   border: 0.1rem solid $colorSecondary
+//   color: #fff
+
+// GENERAL
+body.root
+  margin: 0
+  padding: 0
+
+  @media (min-width: $md)
+    flex-flow: row-reverse nowrap
 
   h1, h2, h3, h4
     padding-top: 1em
@@ -11,3 +40,19 @@ body
   li
     list-style-position: outside
     margin-left: 2em
+
+  a
+    color: $colorSecondary
+
+    &:focus, &:hover
+      color: darken($colorSecondary, 10%)
+
+  .wrapper
+    padding: 0
+
+    main
+      padding: 1rem
+
+  // MODULES
+  @import "header"
+  @import "sidemenu"

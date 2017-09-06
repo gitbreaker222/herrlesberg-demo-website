@@ -2,8 +2,9 @@ extends _base.pug
 
 block page
   
-  if (!!contents)
-    != contents
+  h1 #{title}
+  
+  != contents
   
   each item in contentMenu[slug].children
     div

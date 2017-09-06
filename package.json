@@ -24,7 +24,7 @@
     "clone": "^1.0.2",
     "co-fs-extra": "^1.2.1",
     "commander": "^2.6.0",
-    "datocms-client": "^0.3.27",
+    "elemeno": "^1.1.0",
     "eslint": "^4.3.0",
     "eslint-plugin-html": "^3.1.1",
     "gray-matter": "^2.1.0",
@@ -48,6 +48,7 @@
     "win-fork": "^1.1.1"
   },
   "devDependencies": {
+    "dotenv": "^4.0.0",
     "metalsmith-dev": "^1.0.0"
   },
   "keywords": [

@@ -1,0 +1,43 @@
+aside.menu
+  position: fixed
+  right: 0
+  top: 0
+  height: 100vh
+  background: $colorContrast
+  color: white
+  width: 75%
+  max-width: 30em
+  padding: 1rem
+  transform: translate(100%)
+  transition: transform 222ms
+  z-index: 2
+  display: flex
+  flex-flow: column
+  justify-content: space-between
+
+  @media (min-width: $md)
+    position: static
+    transform: translate(0)
+
+  &.open
+    transform: translate(0)
+    box-shadow: 0 0 2rem 0rem opacify($colorContrast, 0.75)
+
+    @media (min-width: $md)
+      box-shadow: none
+
+  button.toggle
+    position: absolute
+    top: 1em
+    left: 0
+    transform: translate(-111%)
+    padding: 0 1em
+
+    @media (min-width: $md)
+      display: none
+
+  nav
+    flex: 1
+    overflow: auto
+    padding: 1em 0
+    margin-bottom: 1em
