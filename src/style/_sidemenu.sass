@@ -3,8 +3,8 @@ aside.menu
   right: 0
   top: 0
   height: 100vh
-  background: $colorContrast
-  color: white
+  color: lighten($colorSecondary, 30%)
+  background-color: darken($colorPrimary, 30%)
   width: 75%
   max-width: 30em
   padding: 1rem
@@ -28,7 +28,7 @@ aside.menu
 
   button.toggle
     position: absolute
-    top: 1em
+    top: .5em
     left: 0
     transform: translate(-111%)
     padding: 0 1em
@@ -36,8 +36,14 @@ aside.menu
     @media (min-width: $md)
       display: none
 
+  h2
+    align-self: center
+
   nav
     flex: 1
     overflow: auto
     padding: 1em 0
     margin-bottom: 1em
+
+    a
+      line-height: 3

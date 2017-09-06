@@ -1,5 +1,7 @@
-$colorPrimary:    #ffeb3b
-$colorSecondary:  #558b2f
+// green
+$colorPrimary:  #558b2f
+//yellow
+$colorSecondary:    #ffeb3b
 $colorContrast:   #212121
 
 //mobile first:
@@ -22,14 +24,15 @@ $xl: 120rem
 //       padding: 0
 //
 // .button, button, input[type='button'], input[type='reset'], input[type='submit']
-//   background-color: $colorSecondary
-//   border: 0.1rem solid $colorSecondary
+//   background-color: $colorPrimary
+//   border: 0.1rem solid $colorPrimary
 //   color: #fff
 
 // GENERAL
 body.root
   margin: 0
   padding: 0
+  color: $colorPrimary
 
   @media (min-width: $md)
     flex-flow: row-reverse nowrap
@@ -41,14 +44,22 @@ body.root
     list-style-position: outside
     margin-left: 2em
 
-  a
-    color: $colorSecondary
-
     &:focus, &:hover
-      color: darken($colorSecondary, 10%)
+      color: darken($colorPrimary, 10%)
+
+  blockquote
+    margin: 1em
+    padding: 1em
+    border-left: solid #ddd 0.5em
+
+  p
+    img
+      max-width: 100%
 
   .wrapper
     padding: 0
+    height: 100vh
+    overflow: auto
 
     main
       padding: 1rem
