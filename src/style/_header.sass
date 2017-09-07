@@ -3,22 +3,24 @@
   flex-flow: row wrap
   justify-content: center
   align-items: center
-  text-align: center
-  padding: 1em
+  min-height: 7rem
   background: $colorSecondary
-  border-bottom: 3px solid
+  box-shadow: $shadow
 
-  @media (min-width: $md)
-    padding-right: 1em
+  > div
+    flex: 0 1 40rem
+    padding: 1.5rem
 
-  *, h1
-    margin: 0
-    padding: 0 0.5rem
+    img
+      height: 100%
+      max-height: 5rem
 
-  img
-    height: 100%
-    max-height: 5rem
+    h1
+      margin: 0
+      padding: 0
+      font-size: 2.8em
+      text-shadow: $textShadow
 
-  button.toggle
-    @media (min-width: $md)
-      display: none
+    button.toggle
+      @media (min-width: $md)
+        display: none

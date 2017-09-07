@@ -7,7 +7,7 @@ aside.menu
   background-color: $contrastSecondary
   width: 75%
   max-width: 30em
-  padding: 1rem
+  padding: $padding
   transform: translate(100%)
   transition: transform 222ms
   z-index: 2
@@ -16,8 +16,10 @@ aside.menu
   justify-content: space-between
 
   h2, nav
-    padding: 1em 10%
-    border-bottom: 3px solid
+    padding: $padding
+    margin: 0
+    border-bottom: 1px solid
+    color: currentColor
 
   @media (min-width: $md)
     position: static
@@ -51,4 +53,4 @@ aside.menu
 
       a
         line-height: 3
-        font-size: 111%
+        font-size: 1.5em

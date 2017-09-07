@@ -2,8 +2,15 @@
 $colorPrimary:      #558b2f
 //yellow
 $colorSecondary:    #ffeb3b
-$contrastPrimary:  lighten($colorSecondary, 30%)
-$contrastSecondary: darken($colorPrimary, 30%)
+$contrastPrimary:   #ceccb6
+$contrastSecondary: #191c17
+
+$shadow:            0 0 2px 0px #424242
+$textShadow:        0 1px 3px rgba(66, 66, 66, 0.66)
+
+$padding:           1.5rem
+
+$FUCKFUCKFUCKFUCKFUCK: pink
 
 //mobile first:
 //everything without media query works for mobile
@@ -12,28 +19,17 @@ $lg: 80rem
 $xl: 120rem
 
 // LIBRARIES
-// @import "milligram.min"
 @import "amazium"
 
-//CUSTOM milligram
-// @media (min-width: $md)
-//   .row
-//     margin: 0
-//
-//     .column
-//       padding: 0
-//
-// .button, button, input[type='button'], input[type='reset'], input[type='submit']
-//   background-color: $colorPrimary
-//   border: 0.1rem solid $colorPrimary
-//   color: #fff
-
 // GENERAL
+html
+  overflow: auto
+
 body.root
   margin: 0
   padding: 0
   font-family: Roboto,Helvetica Neue,Helvetica,Arial,sans-serif
-  color: $colorPrimary
+  color: $contrastSecondary
   background: #F5F5F5
 
   @media (min-width: $md)
@@ -41,11 +37,12 @@ body.root
 
   h1, h2, h3, h4
     padding-top: 1em
+    color: $colorPrimary
 
   a
     //increase click size
-    padding: 1em
-    margin: -1em
+    padding: 1rem
+    margin: -1rem
 
     @media (min-width: $md)
       padding: inherit
@@ -56,8 +53,8 @@ body.root
         background: white
 
   blockquote
-    margin: 1em
-    padding: 1em
+    margin: $padding
+    padding: $padding
     border-left: solid #ddd 0.5em
 
   p
@@ -72,8 +69,8 @@ body.root
     overflow: auto
 
     main
-      padding: 1rem
-      max-width: 60em
+      padding: $padding
+      max-width: 40rem
       margin: 0 auto
 
   // MODULES
