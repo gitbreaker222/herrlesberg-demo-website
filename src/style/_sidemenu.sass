@@ -15,15 +15,21 @@ aside.menu
   flex-flow: column
   justify-content: space-between
 
+  @media (min-width: $md)
+    position: static
+    transform: translate(0)
+
   h2, nav
     padding: $padding
     margin: 0
     border-bottom: 1px solid
     color: currentColor
 
-  @media (min-width: $md)
-    position: static
-    transform: translate(0)
+  h2
+    display: none
+
+    @media (min-width: $md)
+      display: inherit
 
   &.open
     transform: translate(0)
@@ -51,6 +57,8 @@ aside.menu
       margin: 0
       list-style: none
 
+      li+*
+        margin-top: 4vh
+
       a
-        line-height: 3
         font-size: 1.5em
