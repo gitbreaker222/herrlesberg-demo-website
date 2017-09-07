@@ -47,7 +47,11 @@ var metalsmith_elemeno = function (apiToken) {
         if (page.content.position.number === 1) page.slug = 'index'
         // for some reason skript freezes when try to acces markdown of undefined
         if (page.content.description) description = page.content.description.markdown
-        if (page.content.content) content = page.content.content.markdown
+        if (page.content.content) {
+          content = page.content.content.markdown
+        } else {
+          content = ''
+        }
 
         if (collectionName) {
           /*
