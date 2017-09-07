@@ -28,7 +28,7 @@ html(lang='en')
       header: div
         if (logo)
           img.logo(src=logo.imageUrl)
-        h1 #{mainTitle}
+        h1: a(href='/') #{mainTitle}
           
       main: block page
         
