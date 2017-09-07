@@ -121,9 +121,9 @@ function plugin(opts){
 
       debug('stringifying file: %s', file)
       var data = files[file]
-      data.layout = completeLayoutExtension(data.layout) //customized
+      data.layoutExt = completeLayoutExtension(data.layout) //customized
       data.contents = data.contents.toString()
-      var template = metalsmith.path(dir, data.layout || def)
+      var template = metalsmith.path(dir, data.layoutExt || def) //customized
       if (!templates[template]) {
         debug('found new template: %s', template)
         templates[template] = file
@@ -142,7 +142,7 @@ function plugin(opts){
       // Deep clone params (by passing 'true')
       var clonedParams = extend(true, {}, params)
       var clone = extend({}, clonedParams, metadata, data)
-      var str = metalsmith.path(dir, data.layout || def)
+      var str = metalsmith.path(dir, data.layoutExt || def) //customized
       var render = consolidate[engine]
 
       // Rename file if necessary
