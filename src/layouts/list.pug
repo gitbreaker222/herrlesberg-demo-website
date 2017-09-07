@@ -7,7 +7,11 @@ block page
   != contents
   
   each item in contentMenu[slug].children
-    div
-      a(href=item.path): h3 #{item.title}
-      p #{item.description}
+    div.article
+      h3: a(href=item.path) #{item.title}
+      time #{item.date}
+      if (item.description)
+        p: em #{item.description}
+      != item.contents
+      
     
