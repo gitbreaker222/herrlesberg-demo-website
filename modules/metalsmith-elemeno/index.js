@@ -2,119 +2,111 @@
 var Elemeno = require('elemeno')
 const _ = require('lodash')
 
-var metalsmith_elemeno = function (apiToken) {
-  // Initialise plugin with options.
-  // The plugin could need an instance of a library to process the data.
+var metalsmith_elemeno = function (opts) {
+  var apiToken
+  if (typeof opts === 'string') {
+    apiToken = opts
+  } else {
+    apiToken = opts.apiToken
+  }
+  opts.cacheMaxAge = opts.cacheMaxAge || 2 // minutes
+  opts.cacheSize = opts.cacheSize || 50 // megabytes
 
   return function (files, metalsmith, done) {
-    var options = {
-        cacheMaxAge: 2, // minutes
-        cacheSize: 50 // megabytes
-    }
-    var elemeno = new Elemeno(apiToken, options)
-    var folder = 'content' //TODO with opts
-    var collectionName = null
-    var description = ''
-    var content = ''
+    var elemeno = new Elemeno(apiToken, opts)
+    var meta
+    var pages
+    var path = ''
     var asyncCounter = 0
 
+    // higher order / helper functions
+    var parse = function (collection, templateName) {
+      collection = _.map(collection, function (item) {
+        item.content.slug = path + item.slug
+        item = item.content //extract from the 'content' wrapper
+        if (item.description){
+          item.description = item.description.html
+        }
+        if (item.position) {
+          item.position = item.position.number
+        }
+        if (item.content){
+          item.content = item.content.html //the actual content field
+        }
+        item.template = templateName
+        item.children = []
+
+        if (item.collection) {
+          /*
+            ## CREATE LIST-VIEW PAGE AND ALL ITEMS
+          */
+          asyncCounter++
+          elemeno.getCollectionItems(item.collection)
+          .then(function(response) {
+            asyncCounter--
+
+            path = item.slug + '/' 
+            var collection = response.data
+            collection = parse(collection, 'post')
+            collection = sort(collection)
+            item.children = collection
+            if (!asyncCounter) finish()
+          }, function(error) {
+            done(new Error(error))
+          })
+        }
+
+        return item
+      })
+      return collection
+    }
+    var sort = function (collection) {
+      return _.orderBy(
+        collection,
+        ['position', 'date', 'title'], //TODO could make keys variable
+        ['asc', 'desc', 'asc']
+      )
+    }
+    var finish = function () {
+      files['content.json'] = {
+        contents: JSON.stringify({
+          meta: meta,
+          pages: pages
+        })
+      }
+      done()
+    }
+
     /*
-       # METADATA
+      # GET METADATA
     */
     asyncCounter++
     elemeno.getSingle('meta')
     .then(function(response) {
       asyncCounter--
-      var meta = response.data.content
+
+      meta = response.data.content
       meta = _.merge(metalsmith.metadata(), meta)
       metalsmith.metadata(meta)
-      if (!asyncCounter) done()
+
+      if (!asyncCounter) finish()
     }, function(error) {
       done(new Error(error))
     })
 
+    /*
+      # GET PAGES
+    */
     asyncCounter++
     elemeno.getCollectionItems('pages')
     .then(function(response) {
       asyncCounter--
-      /*
-         # PAGES
-      */
-      response.data.forEach((page) => {
-        collectionName = page.content.collection
 
-        // first page should be index.html
-        if (page.content.position.number === 1) page.slug = 'index'
-        // for some reason skript freezes when try to acces markdown of undefined
-        if (page.content.description) description = page.content.description.markdown
-        if (page.content.content) {
-          content = page.content.content.markdown
-        } else {
-          content = ''
-        }
+      pages = response.data
+      pages = parse(pages, 'page')
+      pages = sort(pages)
 
-        if (collectionName) {
-          /*
-             ## COLLECTION OVERVIEW PAGE
-          */
-          files[`${folder}/${page.slug}.md`] = {
-            layout: 'list',
-            title: page.title,
-            slug: page.slug,
-            description: description,
-            position: page.content.position.number,
-            image: page.content.image,
-            collection: collectionName,
-            contents: content
-          }
-
-          //… and folder for the collection
-          asyncCounter++
-          elemeno.getCollectionItems(collectionName)
-          .then(function(response) {
-            asyncCounter--
-            var collection = response.data
-            var subfolder = `${folder}/${page.slug}`
-            /*
-            === COLLECTIONS ===
-            */
-            collection.forEach((item) => {
-              if (item.content.description) description = item.content.description.markdown
-              if (item.content.content) content = item.content.content.markdown
-
-              files[`${subfolder}/${item.slug}.md`] = {
-                layout: 'post',
-                title: item.title,
-                slug: item.slug,
-                description: description,
-                date: item.content.date,
-                image: item.content.image,
-                contents: content
-              }
-            })
-
-            if (!asyncCounter) done()
-          }, function(error) {
-            done(new Error(error))
-          })
-        } else {
-          /*
-             ## NORMAL PAGE
-          */
-          files[`${folder}/${page.slug}.md`] = {
-            layout: 'layout',
-            title: page.title,
-            slug: page.slug,
-            description: description,
-            position: page.content.position.number,
-            image: page.content.image,
-            contents: content
-          }
-
-        }
-      })
-
-      if (!asyncCounter) done()
+      if (!asyncCounter) finish()
     }, function(error) {
       done(new Error(error))
     })

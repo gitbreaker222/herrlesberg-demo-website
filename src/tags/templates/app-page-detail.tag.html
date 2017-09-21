@@ -1,0 +1,31 @@
+<app-page-detail>
+  <h2>{ page.title }</h2>
+
+  <p if={ page.subtitle }><b>{ page.subtitle }</b></p>
+
+  <time>{ page.date }</time>
+
+  <p if={ page.image } class="cover text-center">
+    <img src={ page.image.imageUrl } alt="cover">
+  </p>
+
+  <div ref="content" class="content"></div>
+
+  <script>
+    var tag = this
+    tag.page = {}
+
+    var uuupdate = function () {
+      //abort, if currentPage targets other template or tag not mounted
+      if (app.data.currentPage.template !== 'post'
+        || !tag.isMounted) {
+        return
+      }
+      tag.page = app.data.currentPage
+      tag.refs.content.innerHTML = tag.page.content
+      tag.update()
+    }
+    this.on('mount', uuupdate)
+    app.on(app.evt.pageChange, uuupdate)
+  </script>
+</app-page-detail>

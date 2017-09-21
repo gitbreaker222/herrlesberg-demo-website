@@ -1,0 +1,40 @@
+<app-page>
+  <h2 hide={ page.position === 1 }>{ page.title }</h2>
+  <div ref="content"></div>
+
+  <virtual if={ page.children }>
+    <div each={ item in page.children }>
+      <time>{ item.date }</time>
+      <a href="#{item.slug}">
+        <h3>{ item.title }</h3>
+      </a>
+      <div class="description">
+        <em>{ item.description }</em>
+      </div>
+      <div run={ insertContent(this) }></div>
+    </div>
+  </virtual>
+
+  <script>
+    var tag = this
+    tag.page = {}
+    tag.insertContent = function (listElement) {
+
+      //TODO trim to first 100char
+      listElement.root.lastElementChild.innerHTML = listElement.item.content
+    }
+
+    var uuupdate = function () {
+      //abort, if currentPage targets other template or tag not mounted
+      if (app.data.currentPage.template !== 'page'
+        || !tag.isMounted) {
+        return
+      }
+      tag.page = app.data.currentPage
+      tag.refs.content.innerHTML = tag.page.content
+      tag.update()
+    }
+    this.on('mount', uuupdate)
+    app.on(app.evt.pageChange, uuupdate)
+  </script>
+</app-page>

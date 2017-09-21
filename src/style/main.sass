@@ -1,85 +1,138 @@
-// green
-$colorPrimary:      #558b2f
-//yellow
-$colorSecondary:    #ffeb3b
-$contrastPrimary:   #ceccb6
-$contrastSecondary: #191c17
+// ==========================================================================
+// Variables
+// ==========================================================================
+// Colors
+$color-highlight:       #409421
+$color-highlight-on:    lighten($color-highlight, 10)
+$color-highlight-off:   darken($color-highlight, 20)
 
-$shadow:            0 0 2px 0px #424242
-$textShadow:        0 1px 3px rgba(66, 66, 66, 0.66)
+$color-light:           #e6e6e6
+$color-dark:            #1d1d1d
 
-$padding:           1.5rem
+$color-secondary:       #e5d234
 
-$FUCKFUCKFUCKFUCKFUCK: pink
+// Layout
+$sm:                    400px // mobile landscape
+$md:                    680px //tablet
+$lg:                    960px //laptop, tablet landscape
+$xl:                    1200px //desktop
 
-//mobile first:
-//everything without media query works for mobile
-$md: 40rem
-$lg: 80rem
-$xl: 120rem
+$side-menu-width:       17rem
 
-// LIBRARIES
-@import "amazium"
+// ==========================================================================
+// Library
+// ==========================================================================
+// Variables pre definitions
+$global-bg:             $color-light
+$text-color:            $color-dark
+$link-color:            $color-highlight
+$link-hover-color:      $color-highlight-on
+$button-bg:             $color-highlight
+$button-hover-bg:       $color-highlight-on
+$button-border-radius:  2px
+@import "baseguide"
+// Customization
+button
+  @extend  .btn
+  border-color: currentColor
+p
+  max-width: 40em
+blockquote
+  font-style: italic
+  padding: 1em
+  border-left: 0.1em solid currentColor
 
-// GENERAL
-html
-  overflow: auto
-
-body.root
-  margin: 0
-  padding: 0
-  font-family: Roboto,Helvetica Neue,Helvetica,Arial,sans-serif
-  color: $contrastSecondary
-  background: #F5F5F5
-
-  @media (min-width: $md)
-    flex-flow: row-reverse nowrap
-
-  h1, h2, h3, h4
-    padding-top: 1em
-    color: $colorPrimary
-
-  a
-    //increase click size
-    padding: 1rem
-    margin: -1rem
-
+// ==========================================================================
+// Mixins
+// ==========================================================================
+=setMenuToggleBtn()
+  button[name=toggle-menu]
     @media (min-width: $md)
-      padding: inherit
-      margin: inherit
+      display: none
 
-      &:focus, &:hover
-        color: darken($colorPrimary, 10%)
-        background: white
+// ==========================================================================
+// General
+// ==========================================================================
+html
+  font-size: 0.8rem
+  @media (min-width: $sm)
+    font-size: 1rem
+  @media (min-width: $md)
+    font-size: 1rem
+  @media (min-width: $xl)
+    font-size: 1.2rem
 
-  blockquote
-    margin: $padding
-    padding: $padding
-    border-left: solid #ddd 0.5em
 
-  p
-    line-height: 1.5
-
-    img
-      max-width: 100%
-
-  time
-    display: inline-block
-    margin-bottom: 1rem
-    color: $colorPrimary
-
-  // MAIN BOX
-  .wrapper
-    padding: 0
-    height: 100vh
+body
+  app
+    display: flex
+    flex-flow: column
     overflow: auto
 
-    main
-      padding: $padding
-      max-width: 40rem
-      margin: 0 auto
+    > *
+      padding: 1rem
 
-  // MODULES
-  @import "header"
-  @import "sidemenu"
-  @import "list"
+      @media (min-width: $lg)
+        padding: 1rem calc(50% - 20rem)
+
+    @media (min-width: $md)
+      padding-right: $side-menu-width
+
+    .splash
+      z-index: -1
+      position: fixed
+      top: 0
+      left: 0
+      width: 100vw
+      height: 100vh
+      padding: 0
+      background: rgba(34, 34, 34, 0.8)
+      opacity: 0
+      transition: opacity 800ms
+
+      &:after
+        content: none
+
+    &.loading .splash
+      z-index: 1
+      opacity: 1
+
+      &:after
+        content: ''
+        top: 0
+        left: 0
+        width: 100vw
+        height: 100vh
+        display: flex
+        justify-content: center
+        align-items: center
+        background-image: url(/media/loading.svg)
+        background-repeat: no-repeat
+        background-position: center
+        background-size: 20%
+        animation: rotate 2s infinite linear
+
+    main
+      padding-top: 5em
+
+      .content
+        padding-top: 3em
+
+        p img
+          @extend .block-center
+
+
+// ==========================================================================
+// Modules
+// ==========================================================================
+@import "header"
+@import "nav"
+
+// ==========================================================================
+// Keyframes
+// ==========================================================================
+@keyframes rotate
+  from
+    transform: rotate(0deg)
+  to
+    transform: rotate(360deg)

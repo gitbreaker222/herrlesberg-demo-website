@@ -1,32 +1,27 @@
-.wrapper > header
+app header
+  z-index: 8
+  background: $color-secondary
   display: flex
   flex-flow: row wrap
   justify-content: center
   align-items: center
-  min-height: 7rem
-  background: $colorSecondary
-  box-shadow: $shadow
 
-  > div
-    flex: 0 1 40rem
-    padding: 1.5rem
+  .controls
+    display: flex
+    justify-content: flex-end
+    min-height: 3rem
+    width: 100%
+    min-height: 3rem
 
-    img
-      height: 100%
-      max-height: 5rem
+    +setMenuToggleBtn()
 
-    h1
-      margin: 0
-      padding: 0
-      font-size: 2.8em
-      font-weight: 500
+    button
+      position: fixed
+      right: 1rem
 
-      a
-        text-decoration: none
+  img
+    width: 2em
+    margin: 0.3em
 
-        &:hover
-          background: none
-
-    button.toggle
-      @media (min-width: $md)
-        display: none
+  h1
+    color: $color-dark

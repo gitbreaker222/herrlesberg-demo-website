@@ -1,0 +1,86 @@
+<app onclick={ removeSplash }>
+  <yield/>
+
+  <header>
+    <div class="controls">
+      <button type="button" name="toggle-menu" onclick={toggleMenu}>
+        ▤
+      </button>
+    </div>
+    <a if={ app.data.meta.logo }
+      href="/#">
+      <img src={ app.data.meta.logo.imageUrl} alt="logo" class="h1">
+    </a>
+    <a href="/#">
+      <h1>{ app.data.meta.mainTitle }</h1>
+    </a>
+  </header>
+
+  <aside class="nav { open: menuOpen }">
+    <button type="button" name="toggle-menu" onclick={toggleMenu}>
+      ▤
+    </button>
+    <h2>Menu</h2>
+    <nav role="navigation" aria-labelledby="firstLabel">
+      <div each={ page in app.data.content }>
+        <a href="#{ page.slug }" onclick={toggleMenu}>
+          { page.title }
+        </a>
+      </div>
+    </nav>
+    <app-footer></app-footer>
+  </aside>
+
+  <main if={ getCurrentPage() }
+        class="block-center {currentPage.slug}">
+    <app-page if={ currentPage.template == 'page' }>
+    </app-page>
+
+    <app-page-detail if={ currentPage.template === 'post' }>
+    </app-page-detail>
+
+  </main>
+
+  <script>
+    /*
+      Afraid of losing your cultural heritage?
+      Culture lives by celebrating and sharing it.
+      It cannot be saved by oppressing others.
+    */
+
+    var tag = this
+    tag.currentPage = {}
+    tag.menuOpen = false
+
+    tag.toggleMenu = function () {
+      tag.menuOpen = !tag.menuOpen
+    }
+
+    tag.getCurrentPage = function () {
+      tag.currentPage = app.data.currentPage
+      return app.data.currentPage
+    }
+
+    tag.removeSplash = function () {
+      tag.root.classList.remove('loading')
+    }
+
+    /*
+      EVENT LISTENERS
+    */
+    this.on('mount', function () {
+      app.trigger(app.evt.appReady)
+    })
+    app.on(app.evt.contentReady, function () {
+      tag.removeSplash()
+      var headTitle = document.querySelector('head title')
+      var favicon = document.querySelector('head link[rel~=icon]')
+
+      headTitle.innerText = app.data.meta.mainTitle
+      if (app.data.meta.favicon) {
+        favicon.href = app.data.meta.favicon.imageUrl
+      }
+      tag.update()
+    })
+  </script>
+</app>

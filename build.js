@@ -2,11 +2,8 @@ const info          = require('./package.json')
 const Metalsmith    = require('./lib')
 const elemeno       = require('./modules/metalsmith-elemeno')
 const sass          = require('metalsmith-sass')
+const postcss       = require('metalsmith-with-postcss')
 const concat        = require('metalsmith-concat')
-const contentMenu   = require('./modules/metalsmith-content-menu')
-const markdown      = require('metalsmith-markdown')
-const layouts       = require('./modules/metalsmith-layouts-222/index')
-const moveUp        = require('metalsmith-move-up')
 var dev = process.argv[2] || false
 if (dev) {
   dev        = require("metalsmith-dev")
@@ -26,8 +23,7 @@ var site = Metalsmith(__dirname)
 // Break the chain, so "site" is defined before dev tasks access it below
 
 site.ignore([
-    '.*',  //ignore hidden files like .eslintrc
-    'layouts',
+    '.*'  //ignore hidden files like .eslintrc
   ])
   .clean(true)
   .use(elemeno(process.env.ELEMENO_API_TOKEN))
@@ -39,30 +35,23 @@ site.ignore([
       return originalPath.replace("style", "assets")
     }
   }))
+  .use(postcss({
+    pattern: ['**/*.css', '!**/_*/*', '!**/_*'],
+    plugins: {
+      'autoprefixer': {}
+    }
+  })) 
+  .use(concat({
+    files: 'tags/**/*.tag.html',
+    output: 'assets/all.tag.js'
+  }))
   .use(concat({
     files: [
-      'tags/**/*.tag.html',
-      'js/riot-setup.js',
+      'js/app.js',
       'js/**/*.js'
     ],
-    output: 'assets/main.tag.js'
+    output: 'assets/main.js'
   }))
-  .use(markdown())
-  .use(contentMenu({
-    folder: 'content',
-    //fileType: '.html',
-    indexKey: 'position',
-    orderBy: 'date',
-    ascOrDesc: 'desc'
-  }))
-  .use(layouts({
-    engine: 'pug',
-    directory: './src/layouts',
-    layoutExtension: '.pug', //custom
-    pattern: 'content/**/*.html'
-  }))
-  .use(moveUp('content/**'))
-  //.use(debug())
   .build(function(err) {
     if (err) { throw err }
   })
@@ -74,12 +63,15 @@ if (dev) {
 
 // function debug() {
 //   return function(files, metalsmith, done) {
+//     console.log('### DEBUG ###')
+//     console.log(files)
 //     Object.keys(files).forEach(function(file){
 //       console.log('##', file)
 //       //var data = files[file]
 //     })
 //
 //     console.log(metalsmith.metadata())
+//     console.log('### DEBUG END ###')
 //     done()
 //   }
 // }

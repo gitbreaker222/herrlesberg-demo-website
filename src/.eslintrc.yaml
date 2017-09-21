@@ -1,5 +1,3 @@
-# Culture lives by celebrating and sharing it,
-# not by hating other cultures
 ---
   env:
     node: false
@@ -8,6 +6,7 @@
     - html
   globals:
     riot: true
+    route: true
     XMLHttpRequest: true
     app: true
   rules:
