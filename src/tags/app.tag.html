@@ -65,6 +65,10 @@
       tag.root.classList.remove('loading')
     }
 
+    tag.scrollTop = function () {
+      document.querySelector('html').scrollTop = 0
+    }
+
     /*
       EVENT LISTENERS
     */
@@ -82,5 +86,6 @@
       }
       tag.update()
     })
+    app.on(app.evt.pageChange, tag.scrollTop)
   </script>
 </app>
