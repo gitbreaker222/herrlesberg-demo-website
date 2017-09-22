@@ -18,9 +18,8 @@
   <script>
     var tag = this
     tag.page = {}
+    
     tag.insertContent = function (listElement) {
-
-      //TODO trim to first 100char
       listElement.root.lastElementChild.innerHTML = listElement.item.content
     }
 
